@@ -8,7 +8,11 @@
     <title>Plantasy | make your home better</title>
 </head>
 <body>
-    <%- include('../headder') %> 
+    <% if (locals.admin) { %>
+        <%- include('../admin/_headder') %>
+    <% }else{  %> 
+        <%- include('../index/_headder') %> 
+    <% } %> 
     
     <%- body %> 
 </body>

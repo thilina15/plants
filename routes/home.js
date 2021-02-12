@@ -3,12 +3,15 @@ const router = express.Router()
 
 
 router.get('/', (req,res)=>{
-    res.render('indexViews/homePage')
+    res.render('index/homePage')
 })
 
 router.get('/gallery',(req,res)=>{
-    res.render('indexViews/gallery')
+    res.render('index/gallery')
 })
 
+router.get('/gallery/:id',(req,res)=>{
+    res.render('index/product')
+})
 
 module.exports =router;
