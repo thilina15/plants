@@ -29,12 +29,62 @@ function saveImage(product, imageEncoded){
     
 }
 
+//update image
+function updateImage(product, imageEncoded,position){
+    if(imageEncoded==null) return
+    try{
+        const image = JSON.parse(imageEncoded) //covert encoded string to json format
+        if(image!=null){
+            const imag = new Buffer.from(image.data , 'base64') //image objects' data field -> buffer (in databse image save as a buffer)
+            const imageType = image.type 
+            if(position==0){
+                product.images[0] = {image:imag, imageType: imageType} 
+            }
+            else if(position==1){
+                product.images[1] = {image:imag, imageType: imageType}
+            }
+            else{
+                if(product.images[1]==null){
+                    product.images[1] = {image:imag, imageType: imageType}
+                }else{
+                    product.images[2] = {image:imag, imageType: imageType}
+                }
+            }
+        }
+    }catch(er){
+        return
+    }
+    
+}
+
 router.get('/login',(req,res)=>{
     res.render('admin/login')
 })
 
-router.get('/gallery',adminAuth,(req,res)=>{
-    res.render('admin/gallery')
+//gallery
+router.get('/gallery',adminAuth,async(req,res)=>{
+    var pros = await product.find()
+    res.render('admin/gallery',{products:pros})
+})
+
+//product edit
+router.get('/gallery/:id',adminAuth,async(req,res)=>{
+    var pro = await product.findById(req.params.id)
+    res.render('admin/product',{product:pro})
+})
+
+router.post('/product/:id',async(req,res)=>{
+    var productOB = await product.findById(req.params.id)
+    productOB.name = req.body.name
+    productOB.description = req.body.description
+    productOB.price = req.body.price
+    productOB.size = {small:req.body.small, medium: req.body.medium, large: req.body.large}
+    productOB.category = req.body.category
+    updateImage(productOB,req.body.image1,0)
+    updateImage(productOB,req.body.image2,1)
+    updateImage(productOB,req.body.image3,2)
+    await productOB.save()
+    res.redirect('/admin/gallery')
 })
 
 //add products
@@ -54,7 +104,7 @@ router.post('/new',adminAuth,async(req,res)=>{
     saveImage(item,req.body.image3)
     await item.save()
     //console.log(req.body)
-    res.render('admin/gallery')
+    res.redirect('/admin/gallery')
 })
 
 router.get('/dashboard',adminAuth,(req,res)=>{

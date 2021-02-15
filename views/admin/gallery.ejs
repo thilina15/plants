@@ -1,1 +1,12 @@
 product gallery
+
+<% products.forEach(product=>{ %>
+    <div>
+        <h1><%=product.name%></h1>
+        <h2><%=product.price%></h2>
+        <h2><%=product.category%></h2>
+        <img src="<%= product.imagPaths[0] %>" width="300">
+        <a href="/admin/gallery/<%= product.id %>"><h1>edit</h1></a>
+        <a href="/admin/removeproduct/<%= product.id %>"><h1>remove</h1></a>
+    </div>
+<% }) %>
