@@ -1,1 +1,36 @@
 add new product page
+<form action="new" method="POST">
+<label>NAME</label>
+<input type="text" name="name" required>
+
+<label>DESCRIPTION</label>
+<textarea name="description" cols="30" rows="10" required></textarea>
+
+<label>PRICE</label>
+<input type="number" name="price" required>
+
+<label>SIZE</label>
+small:
+<input type="checkbox" name="small">
+medium:
+<input type="checkbox" name="medium">
+large:
+<input type="checkbox" name="large">
+
+<label>CATEGORY</label>
+<select name="category" >
+    <option value="pot">pot</option>
+    <option value="plant">plant</option>
+</select>
+
+<label>IMAGE 1</label>
+<input type="file" name="image1" class="filepond" required>
+
+<label>IMAGE 2</label>
+<input type="file" name="image2" class="filepond">
+
+<label>IMAGE 3</label>
+<input type="file" name="image3" class="filepond">
+
+<button type="submit">ADD PRODUCT</button>
+</form>
