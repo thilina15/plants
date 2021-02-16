@@ -15,6 +15,7 @@ const {v4: uuidv4} = require('uuid')
 //require routes
 const homePage = require('./routes/home')
 const adminPage = require('./routes/admin')
+const user = require('./routes/user')
 
 
 //app config
@@ -52,4 +53,5 @@ db.once('open', ()=> console.log('connected to mongoose'))
 
 app.use('/',homePage);
 app.use('/admin',adminPage)
+app.use('/user',user)
 app.listen(process.env.PORT||3000); 

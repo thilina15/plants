@@ -23,7 +23,7 @@ function saveImage(product, imageEncoded){
             const imageType = image.type 
             product.images.push({image:imag, imageType: imageType})
         }
-    }catch(er){
+    }catch(er){ 
         return
     }
     
