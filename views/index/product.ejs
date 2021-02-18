@@ -1,1 +1,17 @@
-this is the product showcase interface;
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4">
+        <h1><%= product.name %></h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4">
+        <img src="<%=product.imagPaths[0]%> " alt="product image" width="500" height="500">
+    </div>
+    <div class="col-md-4">
+        <h3><%= product.description %> </h3>
+        <label >PRICE: <%= product.price %>.00/=</label>
+        <form action="/"></form>
+    </div>
+</div>

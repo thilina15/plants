@@ -8,5 +8,19 @@
     <div class="col-md-3">
         <a href="/gallery"><h1>Gallery</h1></a>
     </div>
+    <div class="col-md-2">
+        <% if(locals.user){ %>
+            <a href="/user/dashboard"><h1><%= user.firstName %> </h1></a>
+        <%}else{%>
+            <a href="/user/login"><h1>login</h1></a>
+        <%}%> 
+    </div>
+    <div class="col-md-2">
+        <% if(locals.user){ %>
+            <a href="/user/logout"><h1> Log Out</h1></a>
+        <%}else{%>
+            <a href="/user/signup"><h1> Sign Up</h1></a>
+        <%}%> 
+    </div>
 </div>
 <hr>

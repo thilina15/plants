@@ -11,6 +11,22 @@ const user = new mongoose.Schema({
     email:{
         type:String,
         required:true
+    },
+    address1st:{
+        type:String,
+        required:true
+    },
+    address2nd:{
+        type:String,
+        required:true
+    },
+    mobile:{
+        type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
     }
 })
 
