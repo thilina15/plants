@@ -21,7 +21,8 @@ router.get('/signup',(req,res)=>{
 router.post('/signup',async(req,res)=>{
     var testOB = await user.findOne({email:req.body.email})
     if(testOB){
-        res.redirect('/')
+        res.locals.error = "email allready used.. cannot sign up"
+        res.render('user/signup')
     }
     else{
         var userOB = new user({
