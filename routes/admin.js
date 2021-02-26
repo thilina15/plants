@@ -2,16 +2,8 @@ const express = require('express')
 const router = express.Router()
 const admin = require('../models/admin')
 const product = require('../models/product')
+const {adminAuth} = require('../auth/adminAuth')
 
-//admin auth
-function adminAuth(req,res,next){
-    if(req.session.admin!=='plantasyAdmin'){
-        res.redirect('/admin/login')
-    }else{
-        res.locals.admin=true
-        next()
-    }
-}
 
 //save image
 function saveImage(product, imageEncoded){
@@ -56,7 +48,12 @@ function updateImage(product, imageEncoded,position){
     }
     
 }
+//dashboard
+router.get('/',(req,res)=>{
+    res.redirect('/admin/dashboard')
+})
 
+//login page
 router.get('/login',(req,res)=>{
     res.render('admin/login')
 })

@@ -1,17 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const user = require('../models/user')
+const cart = require('../models/cart')
+const {userAuth} = require('../auth/userAuth') 
 
-//user auth
-function userAuth(req,res,next){
-    if(req.session.user!=null){
-        const userOB = req.session.user
-        res.locals.user=userOB
-        next()
-    }else{
-        res.redirect('/user/login')
-    }
-}
 
 //sign up 
 router.get('/signup',(req,res)=>{
@@ -25,6 +17,8 @@ router.post('/signup',async(req,res)=>{
         res.render('user/signup')
     }
     else{
+        var cartOB = new cart()
+        const savedCart = await cartOB.save()
         var userOB = new user({
             firstName:req.body.firstName,
             lastName:req.body.lastName,
@@ -32,7 +26,8 @@ router.post('/signup',async(req,res)=>{
             address2nd:req.body.address2nd,
             email:req.body.email,
             mobile:req.body.mobile,
-            password:req.body.password
+            password:req.body.password,
+            cart:savedCart.id
         })
         try{
             await userOB.save()
@@ -46,6 +41,7 @@ router.post('/signup',async(req,res)=>{
     
 })
 
+//login
 router.get('/login',(req,res)=>{
     res.render('user/login')
 })

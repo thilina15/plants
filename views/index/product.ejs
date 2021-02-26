@@ -10,8 +10,20 @@
         <img src="<%=product.imagPaths[0]%> " alt="product image" width="500" height="500">
     </div>
     <div class="col-md-4">
-        <h3><%= product.description %> </h3>
+        <h3><%= product.description %></h3>
         <label >PRICE: <%= product.price %>.00/=</label>
-        <form action="/"></form>
+        
+        <form action="/cart/add/<%=product.id%>" method="POST">
+            <label>SIZE</label>
+            <select name="size" >
+                <option value="small" selected>small</option>
+                <option value="medium">medium</option>
+                <option value="large">large</option>
+            </select>
+
+            <label >Quantity</label>
+            <input type="number" name="quantity" value=1>
+            <button type="submit">ADD to CART</button>
+        </form>
     </div>
 </div>

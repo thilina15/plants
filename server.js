@@ -16,6 +16,7 @@ const {v4: uuidv4} = require('uuid')
 const homePage = require('./routes/home')
 const adminPage = require('./routes/admin')
 const user = require('./routes/user')
+const cart = require('./routes/cart')
 
 
 //app config
@@ -32,14 +33,6 @@ app.use(session({
     saveUninitialized: true
 }))
 
-// app.use(async function(){
-//     var ad = new admin()
-//     ad.name='aroshi'
-//     ad.userName='plantasy'
-//     ad.password='ros'
-//     await ad.save()
-// })
-
 
 //databse connection
 mongoose.connect(process.env.DATABASE_URL,{
@@ -54,4 +47,5 @@ db.once('open', ()=> console.log('connected to mongoose'))
 app.use('/',homePage);
 app.use('/admin',adminPage)
 app.use('/user',user)
+app.use('/cart',cart)
 app.listen(process.env.PORT||3000); 
