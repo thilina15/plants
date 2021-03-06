@@ -1,0 +1,39 @@
+this is cart page
+<% if(locals.products) {%>
+    <%= products[0] %> 
+<% } %>  
+
+
+
+
+<table border="2">
+    <tr>
+        <th>
+            ITEM NAME
+        </th>
+        <th>
+            PREVIEW
+        </th>
+        <th>
+            SIZE
+        </th>
+        <th>
+            CATEGORY
+        </th>
+        <th>
+            QUANTUTY
+        </th>
+        <th>
+            SUB TOTAL
+        </th>
+    </tr>
+    <% products.forEach(item => { %>
+        <tr>
+            <td>
+                <%= item.size %> 
+            </td>
+        </tr>
+        
+    <% }); %> 
+
+</table>

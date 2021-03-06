@@ -17,7 +17,7 @@ router.post('/add/:id',userAuth,async(req,res)=>{
         
         cartOBJ.items.forEach(item => {
             if(item.product==productOBJ.id && item.size==req.body.size){
-                item.quantity= item.quantity + req.body.quantity
+                item.quantity= item.quantity + parseInt(req.body.quantity)
                 throw breakExc //get out from loop
             }
         })
@@ -37,6 +37,39 @@ router.post('/add/:id',userAuth,async(req,res)=>{
   
 })
 
+//view cart
+router.get('/',userAuth,async(req,res)=>{
+    // var cartOB = await cart.findById(req.session.user.cart)
+    
+    cart.findById(req.session.user.cart)
+    
+    .then((cartOB) => {
+        var products=[]
+        cartOB.items.forEach( item=>{
+            product.findById(item.product)
+            .then((productOB) => {
+                var product = {
+                        name:productOB,
+                        quantity:item.quantity,
+                        size:item.size
+                    }
+                
+                products.push(product)
+                // console.log(products)
+                
+            })
+            
+        })
+        
+    })
+    .then((products) => {
+        console.log(products)
+        res.render('user/cart',{products:products}) 
+    })
+    
+    
+    
+})
 
 
 module.exports = router
