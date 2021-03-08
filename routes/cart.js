@@ -4,6 +4,7 @@ const {userAuth} = require('../auth/userAuth')
 const user = require('../models/user')
 const cart = require('../models/cart')
 const product = require('../models/product')
+const { promiseImpl } = require('ejs')
 
 
 router.post('/add/:id',userAuth,async(req,res)=>{
@@ -37,39 +38,26 @@ router.post('/add/:id',userAuth,async(req,res)=>{
   
 })
 
+
+
+
 //view cart
 router.get('/',userAuth,async(req,res)=>{
-    // var cartOB = await cart.findById(req.session.user.cart)
-    
-    cart.findById(req.session.user.cart)
-    
-    .then((cartOB) => {
-        var products=[]
-        cartOB.items.forEach( item=>{
-            product.findById(item.product)
-            .then((productOB) => {
-                var product = {
-                        name:productOB,
-                        quantity:item.quantity,
-                        size:item.size
-                    }
-                
-                products.push(product)
-                // console.log(products)
-                
-            })
-            
-        })
-        
-    })
-    .then((products) => {
+    var cartOB = await cart.findById(req.session.user.cart)
+    var products=[]
+    cartOB.items.forEach(async item=>{
+        var productOB = await product.findById(item.product)
+            var element = {
+                product:productOB,
+                quantity:item.quantity,
+                size:item.size
+            }
         console.log(products)
-        res.render('user/cart',{products:products}) 
+        products.push(element)
     })
-    
-    
-    
+    res.render('user/cart',{products:products}) 
 })
+
 
 
 module.exports = router
