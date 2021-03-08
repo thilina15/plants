@@ -40,22 +40,44 @@ router.post('/add/:id',userAuth,async(req,res)=>{
 
 
 
-
+function fillCart(cartObject){
+    var products=[]
+        cartObject.items.forEach(async item=>{
+            var productOB = await product.findById(item.product)
+                var element = {
+                    product:productOB,
+                    quantity:item.quantity,
+                    size:item.size
+                }
+            products.push(element)
+            console.log(products.length)
+        })
+        return products
+        
+        
+}
+ 
 //view cart
 router.get('/',userAuth,async(req,res)=>{
     var cartOB = await cart.findById(req.session.user.cart)
-    var products=[]
-    cartOB.items.forEach(async item=>{
-        var productOB = await product.findById(item.product)
-            var element = {
-                product:productOB,
-                quantity:item.quantity,
-                size:item.size
-            }
-        console.log(products)
-        products.push(element)
-    })
-    res.render('user/cart',{products:products}) 
+    // var products=[]
+    // cartOB.items.forEach(async item=>{
+    //     var productOB = await product.findById(item.product)
+    //         var element = {
+    //             product:productOB,
+    //             quantity:item.quantity,
+    //             size:item.size
+    //         }
+    //     console.log(products)
+    //     products.push(element)
+    // })
+    var pros = fillCart(cartOB,)
+    res.render('user/cart',{products:pros})
+    
+ 
+        
+   
+      
 })
 
 
