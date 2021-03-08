@@ -42,37 +42,53 @@ router.post('/add/:id',userAuth,async(req,res)=>{
 
 function fillCart(cartObject){
     var products=[]
-        cartObject.items.forEach(async item=>{
-            var productOB = await product.findById(item.product)
+    return new Promise((resolve,reject)=>{
+        cartObject.items.forEach(async(a,index)=>{
+            return product.findById(a.product).then(productOB => {
                 var element = {
                     product:productOB,
-                    quantity:item.quantity,
-                    size:item.size
+                    quantity:a.quantity,
+                    size:a.size
                 }
-            products.push(element)
-            console.log(products.length)
+                products.push(element)
+                console.log(index)
+
+                if(index===cartObject.items.length-1){
+                    console.log('resolved')
+                    resolve(products)
+
+                }
+            })   
         })
-        return products
-        
-        
+               
+    })       
 }
- 
+
+
 //view cart
 router.get('/',userAuth,async(req,res)=>{
     var cartOB = await cart.findById(req.session.user.cart)
     // var products=[]
-    // cartOB.items.forEach(async item=>{
+    // cartOB.items.forEach(async (item,index)=>{
     //     var productOB = await product.findById(item.product)
     //         var element = {
     //             product:productOB,
     //             quantity:item.quantity,
     //             size:item.size
     //         }
-    //     console.log(products)
+        
     //     products.push(element)
+    //     console.log(products)
+    //     console.log(index)
     // })
-    var pros = fillCart(cartOB,)
-    res.render('user/cart',{products:pros})
+    fillCart(cartOB).then((products) => {
+        console.log(' finalized')
+        res.render('user/cart',{products:products})
+    })
+    
+    
+    
+    
     
  
         
@@ -83,3 +99,4 @@ router.get('/',userAuth,async(req,res)=>{
 
 
 module.exports = router
+
