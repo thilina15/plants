@@ -67,33 +67,12 @@ function fillCart(cartObject){
 
 //view cart
 router.get('/',userAuth,async(req,res)=>{
-    var cartOB = await cart.findById(req.session.user.cart)
-    // var products=[]
-    // cartOB.items.forEach(async (item,index)=>{
-    //     var productOB = await product.findById(item.product)
-    //         var element = {
-    //             product:productOB,
-    //             quantity:item.quantity,
-    //             size:item.size
-    //         }
-        
-    //     products.push(element)
-    //     console.log(products)
-    //     console.log(index)
-    // })
-    fillCart(cartOB).then((products) => {
-        console.log(' finalized')
-        res.render('user/cart',{products:products})
+    var cartOB = await cart.findById(req.session.user.cart).populate({
+        path:'items.product',
+        model:'product'
     })
-    
-    
-    
-    
-    
- 
-        
-   
-      
+    var products = cartOB.items
+     res.render('user/cart',{products:products})    
 })
 
 

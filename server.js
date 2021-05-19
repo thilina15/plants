@@ -48,4 +48,7 @@ app.use('/',homePage);
 app.use('/admin',adminPage)
 app.use('/user',user)
 app.use('/cart',cart)
+app.use('/kamal',(req,res)=>{
+    res.send('hellow')
+})
 app.listen(process.env.PORT||3000); 

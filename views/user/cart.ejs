@@ -1,12 +1,10 @@
 this is cart page
-<% if(locals.products) {%>
-    <%= products[0] %> 
-<% } %>  
 
 
 
 
-<table border="2">
+
+<table border="5">
     <tr>
         <th>
             ITEM NAME
@@ -30,7 +28,22 @@ this is cart page
     <% products.forEach(item => { %>
         <tr>
             <td>
+                <%= item.product.name %> 
+            </td>
+            <td>
+                <img src="<%=item.product.imagPaths[0]%> " alt="product image" width="75" height="100">
+            </td>
+            <td>
                 <%= item.size %> 
+            </td>
+            <td>
+                <%= item.product.category %> 
+            </td>
+            <td>
+                <%= item.quantity %> 
+            </td>
+            <td>
+                <%= item.product.price*item.quantity%> 
             </td>
         </tr>
         
