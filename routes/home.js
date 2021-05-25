@@ -15,6 +15,7 @@ function userAuth(req,res,next){
 }
 
 router.get('/', userAuth,(req,res)=>{
+    res.locals.home=true
     res.render('index/homePage')
 })
 
