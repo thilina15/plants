@@ -11,12 +11,12 @@ Version: - v1.0
 /* :: 2.0 Import All CSS */
 /*@import url(/public/css/bootstrap.min.css);*/
 @import url(./CSS/bootstrap.min.css);
-@import url(./css/classy-nav.css);
-@import url(./css/owl.carousel.min.css);
-@import url(./css/animate.css);
-@import url(./css/magnific-popup.css);
-@import url(./css/font-awesome.min.css);
-@import url(./css/elegant-icon.css);
+@import url(./CSS/classy-nav.css);
+@import url(./CSS/owl.carousel.min.css);
+@import url(./CSS/animate.css);
+@import url(./CSS/magnific-popup.css);
+@import url(./CSS/font-awesome.min.css);
+@import url(./CSS/elegant-icon.css);
 /* :: 3.0 Base CSS */
 * {
   margin: 0;
