@@ -1,57 +1,77 @@
-edit product page
-<form action="/admin/product/<%=product.id%> " method="POST">
-    <div class="row">
-        <div class="col-md-6">
-            <label>NAME</label>
-            <input type="text" name="name" required value="<%= product.name %> ">
-            
-            <label>PRICE</label>
-            <input type="number" name="price" required value="<%= product.price %>">
-            
-            <label>SIZE</label>
-            small:
-            <input type="checkbox" name="small" <% if(product.size.small=='on') {%>checked <%}%>  >
-            medium:
-            <input type="checkbox" name="medium" <% if(product.size.medium=='on') {%>checked <%}%>  >
-            large:
-            <input type="checkbox" name="large" <% if(product.size.large=='on') {%>checked <%}%>  >
-            
-            <label>CATEGORY</label>
-            <select name="category" >
-                <option value="pot" <% if(product.category=='pot') {%>selected <%}%>>pot</option>
-                <option value="plant" <% if(product.category=='plant') {%>selected <%}%>>plant</option>
-            </select>
 
-        </div>
-        <div class="col-md-6">
-            <label>DESCRIPTION</label>
-            <textarea name="description" cols="30" rows="10" required><%= product.description %> </textarea>
-        </div>
-    </div>
-    <div class="row">
 
-        <div class="col-md-4">
-            <img src="<%= product.imagPaths[0] %>" width="400" >
-            <div class="row">
+<!-- new update -->
+
+<br>
+<div class="container">
+    <form action="/admin/product/<%=product.id%> " method="POST">
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" name="name" value="<%= product.name %>">
+                </div>
+                <div class="form-group">
+                    <label>PRICE</label>
+                    <input type="number" name="price" class="form-control" value="<%= product.price %>" required>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>SIZE</label>
+                        </div>
+                        <div class="col-md-9">
+                            small:
+                            <input type="checkbox" name="small" <% if(product.size.small=='on') {%>checked <%}%>>
+                            medium:
+                            <input type="checkbox" name="medium" <% if(product.size.medium=='on') {%>checked <%}%>>
+                            large:
+                            <input type="checkbox" name="large" <% if(product.size.large=='on') {%>checked <%}%>>
+                        </div>
+                    </div>
+                    
+                        
+                </div>
+                <div class="form-group">
+                    <label>CATEGORY</label>
+                    <select name="category" class="form-control">
+                        <option value="pot" class="form-control" <% if(product.category=='pot') {%>selected <%}%>>pot</option>
+                        <option value="plant" class="form-control" <% if(product.category=='plant') {%>selected <%}%>>plant</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label>DESCRIPTION</label>
+                <textarea name="description" cols="30" rows="10" required class="form-control"><%= product.description %></textarea>
+            </div>
+        </div>
+        
+       
+        
+        <div class="row">
+            <!-- image 01 -->
+            <div class="col-md-4">
                 <label>IMAGE 1</label>
-                <input type="file" name="image1" class="filepond">
-            </div>    
-        </div>
-        <div class="col-md-4">
-            <img src="<%= product.imagPaths[1] %>" width="400" >
-            <div class="row">
+                <input type="file" name="image1" class="filepond" >
+                <img src="<%= product.imagPaths[0] %>" width="400" >
+            </div>
+            <!-- image 02 -->
+            <div class="col-md-4">
                 <label>IMAGE 2</label>
                 <input type="file" name="image2" class="filepond">
+                <img src="<%= product.imagPaths[1] %>" width="400" >
             </div>
-            
+            <!-- image 03 -->
+            <div class="col-md-4">
+                <label>IMAGE 3</label>
+                <input type="file" name="image3" class="filepond">
+                <img src="<%= product.imagPaths[2] %>" width="400" >
+            </div>
         </div>
-        <div class="col-md-4">
-            <img src="<%= product.imagPaths[2] %>" width="400" >
-            <label>IMAGE 3</label>
-            <input type="file" name="image3" class="filepond">
-        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Update Product</button>
+    </form>
+</div>
 
-    </div>
-
-<button type="submit">EDIT PRODUCT</button>
-</form>
+<br>

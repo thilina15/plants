@@ -113,21 +113,37 @@ router.get('/logout',(req,res)=>{
     res.redirect('/admin/login')
 })
 
-router.post('/login',async(req,res)=>{
-    try{
-        const adminOB = await admin.findOne({userName:req.body.userName, password:req.body.password})
-        if(adminOB){
-            req.session.admin="plantasyAdmin"
-            res.redirect('/admin/dashboard')
-        }else{
-            res.locals.error='invalid login details'
-            res.render('admin/login')
-        }
+// router.post('/login',async(req,res)=>{
+//     try{
+//         const adminOB = await admin.findOne({userName:req.body.userName, password:req.body.password})
+//         if(adminOB){
+//             req.session.admin="plantasyAdmin"
+//             res.redirect('/admin/dashboard')
+//         }else{
+//             res.locals.error='invalid login details'
+//             res.render('admin/login')
+//         }
+//     }
+//     catch(err){
+//         res.locals.error='invalid login details'
+//         res.render('admin/login')
+//     }  
+// })
+//direct login
+router.post('/login',(req,res)=>{
+    if(req.body.userName == 'admin' && req.body.password == '123'){
+        req.session.admin="plantasyAdmin"
+        res.redirect('/admin/dashboard')
     }
-    catch(err){
+    else{
         res.locals.error='invalid login details'
         res.render('admin/login')
-    }  
+    } 
+})
+
+router.get('/removeproduct/:id',async(req,res)=>{
+    await product.findByIdAndRemove(req.params.id)
+    res.redirect('/admin/gallery')
 })
 
 module.exports = router

@@ -1,14 +1,18 @@
 
 
+
 <center>
     <%- include('../_error') %> 
-<form action="/admin/login" method="POST">
-    User Name
-    <input type="text" name="userName">
-    Password
-    <input type="password" name="password">
-    <input type="submit">
-
-</form>
-
-</center>
+    <div class="row-cols-md-4">
+        <form class="form-signin" action="/admin/login" method="POST">
+            <h1 class="h3 mb-3 font-weight-normal">Admin Login</h1>
+            <label class="sr-only">Email</label>
+            <input type="text" class="form-control" placeholder="Enter User Name" name="userName" >
+            <label  class="sr-only">Password</label>
+            <input type="password"  class="form-control" placeholder="Enter Password" name="password">
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+    </div>
+ </center>
+<br>

@@ -34,7 +34,7 @@ router.post('/add/:id',userAuth,async(req,res)=>{
         }
     }
     await cartOBJ.save()
-    res.send(cartOBJ)
+    res.redirect('/gallery/'+req.params.id)
   
 })
 
