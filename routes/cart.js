@@ -72,7 +72,39 @@ router.get('/',userAuth,async(req,res)=>{
         model:'product'
     })
     var products = cartOB.items
-     res.render('user/cart',{products:products})    
+    var total = cartOB.total
+     res.render('user/cart',{products:products,total:total})    
+})
+
+//add quantity
+router.get('/add/:index',userAuth,async(req,res)=>{
+    var cartOB = await cart.findById(req.session.user.cart)
+    cartOB.items[req.params.index].quantity++
+    await cartOB.save()
+    res.redirect('/cart')
+})
+
+//remove quantity
+router.get('/sub/:index',userAuth,async(req,res)=>{
+    const i = req.params.index
+    var cartOB = await cart.findById(req.session.user.cart)
+    if(cartOB.items[i].quantity>=2){
+        cartOB.items[i].quantity--
+    }else{
+        cartOB.items.splice(i,1)
+    }
+    
+    await cartOB.save()
+    res.redirect('/cart')
+})
+
+//remove item from cart
+router.get('/remove/:index',userAuth,async(req,res)=>{
+    const i = req.params.index
+    var cartOB = await cart.findById(req.session.user.cart)
+    cartOB.items.splice(i,1)
+    await cartOB.save()
+    res.redirect('/cart')
 })
 
 

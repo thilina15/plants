@@ -17,6 +17,7 @@ const homePage = require('./routes/home')
 const adminPage = require('./routes/admin')
 const user = require('./routes/user')
 const cart = require('./routes/cart')
+const order = require('./routes/order')
 
 
 //app config
@@ -35,7 +36,7 @@ app.use(session({
 
 
 //databse connection
-mongoose.connect(process.env.DATABASE_URL,{
+mongoose.connect(process.env.DATABSE_URL_LOCAL,{
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false, 
@@ -48,7 +49,6 @@ app.use('/',homePage);
 app.use('/admin',adminPage)
 app.use('/user',user)
 app.use('/cart',cart)
-app.use('/kamal',(req,res)=>{
-    res.send('hellow')
-})
+app.use('/order',order)
+
 app.listen(process.env.PORT||3000); 
