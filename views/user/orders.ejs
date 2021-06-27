@@ -1,0 +1,36 @@
+<div class="container">
+    <h2>All Orders</h2>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Items</th>
+            <th scope="col">State</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+            <%orders.forEach((order,i)=>{ %>
+                <tr>
+                    <td style="vertical-align: middle;"><%=i+1%></td>
+                    <td>
+                        <% order.items.forEach(item=>{ %>
+                            <div class="row">
+                                <img src="<%=item.product.imagPaths[0]%>" style="height: 40px; width: auto;">
+                                <%=item.size%>
+                                <%=item.quantity%>  
+                            </div>
+                        <% }) %>  
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <%=order.state%> 
+                    </td>
+                    <td style="vertical-align: middle;">
+                        total
+                    </td>
+                </tr>
+            <%})%>
+        </tbody>
+      </table>
+</div>
+

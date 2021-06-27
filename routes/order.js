@@ -19,7 +19,19 @@ router.post('/',userAuth,async(req,res)=>{
         }
     })
     var cartOB = await cart.findById(userOB.cart)
-    console.log(cartOB)
+    orderOB.items = cartOB.items
+    await orderOB.save()
+    res.redirect('/order/user')
 })
+
+//view all orders (user)
+router.get('/user',userAuth,async(req,res)=>{
+    const orders = await order.find({user:req.session.user}).populate({
+        path:'items.product',
+        model:'product'
+    })
+    res.render('user/orders',{orders:orders})
+})
+
 
 module.exports = router

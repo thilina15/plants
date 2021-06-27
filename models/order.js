@@ -33,7 +33,8 @@ const order = new mongoose.Schema({
         type:Date,
         default:Date.now()
     },
-    deliveredDate:Date
+    deliveredDate:Date,
+    feedBack:String
 })
 
 module.exports = mongoose.model('order',order)
