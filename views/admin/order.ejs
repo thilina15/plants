@@ -1,23 +1,22 @@
-<% if(products){ %> 
+
     <br>
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="cart-table clearfix">
-                    <table class="table table-responsive">
+                    <table style="table-layout: auto; width: 100%;" class="table table-responsive">
                         <thead>
                             <tr>
                                 <th>Products</th>
                                 <th style="text-align: left;">Size</th>
                                 <th>Category</th>
                                 <th>Quantity</th>
-                                <th>Price</th>
                                 <th>TOTAL</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% products.forEach((item,i) => { %>
+                            <% order.items.forEach((item,i) => { %>
                                 <tr>
                                     <td class="cart_product_img">
                                         <a href="#"><img src="<%=item.product.imagPaths[0]%>" alt="Product"></a>
@@ -30,15 +29,9 @@
                                         <h5><%= item.product.category %></h5>
                                     </td>
                                     <td class="qty">
-                                        <div class="quantity">
-                                            <a href="/cart/sub/<%=i%>"><span class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></span></a>
-                                            <h5 class="qty-text"><%= item.quantity %> </h5>
-                                            <a href="/cart/add/<%=i%>"><span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span></a>   
-                                        </div>
+                                        <h5 class="qty-text"><%= item.quantity %> </h5>
                                     </td>
-                                    <td class="price"><span>RS <%=item.product.price%></span></td>
-                                    <td class="total_price"><span>RS <%= item.product.price*item.quantity%></span></td>
-                                    <td class="action"><a href="/cart/remove/<%=i%>"><i class="icon_close"></i></a></td>
+                                    <td><%=item.product.price%>X<%= item.quantity %>=<%= item.product.price*item.quantity%>.00/=</td>
                                 </tr>
                             <% }); %> 
                         </tbody>
@@ -49,7 +42,7 @@
         <hr>
 
         <div class="row">
-            <% if(products.length>0){%>
+            <% if(order.items.length>0){%>
                 <form action=""></form>
             <!-- delivery details -->
             <div class="col-12 col-lg-6">
@@ -59,21 +52,21 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="name" value="<%=locals.user.firstName%>">
+                                <input type="text" class="form-control" name="name" value="<%=order.address.name%>" readonly>
                             </div>
                             <div class="form-grou col-md-6">
                                 <label>Mobile</label>
-                                <input type="text" class="form-control" name="mobile" value="<%=locals.user.mobile%>">
+                                <input type="text" class="form-control" name="mobile" value="<%=order.address.mobile%>" readonly>
                             </div>   
                         </div>
                         
                         <div class="form-group">
                             <label>Address Line 1</label>
-                            <input type="text" class="form-control" name="address1st" value="<%=locals.user.address1st%>">
+                            <input type="text" class="form-control" name="address1st" value="<%=order.address.address1st%>" readonly>
                         </div>
                         <div class="form-group">
                             <label>Address Line 2</label>
-                            <input type="text" class="form-control" name="address2nd" value="<%=locals.user.address2nd%>">
+                            <input type="text" class="form-control" name="address2nd" value="<%=order.address.address2nd%>" readonly>
                         </div>
                         
                         <button type="submit" class="btn btn-success">Place Order</button>
@@ -86,15 +79,12 @@
             <div class="col-12 col-lg-6">
                 <br><br><br><br><br>
                 <center>
-                    <h2>Cart Total</h2>
-                    <h1>Rs: <%=total%>.00/= </h1>
+                    <h2>Order Total</h2>
+                    <h1>Rs: <%=order.total%>.00/= </h1>
                 </center>
             </div>
         </div>
     </div>
     <br>
-<% }else{ %>
-    <br>
-    <center><h1>No Items in the Cart</h1></center> 
-<% } %> 
+
 

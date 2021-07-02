@@ -15,6 +15,10 @@ const order = new mongoose.Schema({
             default:1
         }
     }],
+    total:{
+        type:Number,
+        default:0
+    },
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'user'

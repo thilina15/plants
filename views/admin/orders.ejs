@@ -1,0 +1,51 @@
+<div class="container">
+    <h2>All Orders</h2>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Items</th>
+            <th scope="col">State</th>
+            <th scope="col">Total</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Create Date</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <%orders.forEach((order,i)=>{ %>
+                <% if(order.state==filter|| filter=='all'){ %> 
+                    <tr>
+                        <td style="vertical-align: middle;"><%=i+1%></td>
+                        <td>
+                            <% order.items.forEach(item=>{ %>
+                                <div class="row">
+                                    <img src="<%=item.product.imagPaths[0]%>" style="height: 40px; width: auto;">
+                                    <%=item.product.name%>
+                                    <%=item.size%> 
+                                    <%=item.quantity%>
+                                </div>
+                            <% }) %>  
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <%=order.state%> 
+                        </td>
+                        <td style="vertical-align: middle;">
+                            total
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <%=order.user.firstName %> 
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <%=order.createdDate.getDate() %>/<%=order.createdDate.getMonth() %>/<%=order.createdDate.getFullYear() %>
+                        </td>
+                        <td style="vertical-align: middle;">
+                            <a href="/order/admin/<%=order._id%>">View Order</a>
+                        </td>
+                    </tr>
+                <% } %> 
+            <%})%>
+        </tbody>
+      </table>
+</div>
+
