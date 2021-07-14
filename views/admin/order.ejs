@@ -48,30 +48,38 @@
             <div class="col-12 col-lg-6">
                 <h4>Delivery Details</h4>
                 <br>
-                    <form action="/order" method="POST">
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="name" value="<%=order.address.name%>" readonly>
-                            </div>
-                            <div class="form-grou col-md-6">
-                                <label>Mobile</label>
-                                <input type="text" class="form-control" name="mobile" value="<%=order.address.mobile%>" readonly>
-                            </div>   
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name" value="<%=order.address.name%>" readonly>
                         </div>
-                        
-                        <div class="form-group">
-                            <label>Address Line 1</label>
-                            <input type="text" class="form-control" name="address1st" value="<%=order.address.address1st%>" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label>Address Line 2</label>
-                            <input type="text" class="form-control" name="address2nd" value="<%=order.address.address2nd%>" readonly>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-success">Place Order</button>
+                        <div class="form-grou col-md-6">
+                            <label>Mobile</label>
+                            <input type="text" class="form-control" name="mobile" value="<%=order.address.mobile%>" readonly>
+                        </div>   
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Address Line 1</label>
+                        <input type="text" class="form-control" name="address1st" value="<%=order.address.address1st%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Address Line 2</label>
+                        <input type="text" class="form-control" name="address2nd" value="<%=order.address.address2nd%>" readonly>
+                    </div>
+                    <form action="/order/admin/<%=order._id%>" method="POST">
+                        <select class="form-select" aria-label="Default select example" name="state">
+                            <option value="pending" <% if(order.state=='pending'){ %>selected<% } %>  >pending</option>
+                            <option value="processing" <% if(order.state=='processing'){ %>selected<% } %>>processing</option>
+                            <option value="delivering" <% if(order.state=='delivering'){ %>selected<% } %>>delivering</option>
+                            <option value="completed" <% if(order.state=='completed'){ %>selected<% } %>>completed</option>
+                            <option value="canceled" <% if(order.state=='canceled'){ %>selected<% } %>>canceled</option>
+                        </select>
+                        <br>
+                        <button type="submit" class="btn btn-success">Update Order Status</button>
                     </form>
             </div>
+            
             <%} %> 
             
 

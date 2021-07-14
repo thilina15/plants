@@ -1,3 +1,4 @@
+
 <% if(products){ %> 
     <br>
     <div class="container">
@@ -11,8 +12,8 @@
                                 <th style="text-align: left;">Size</th>
                                 <th>Category</th>
                                 <th>Quantity</th>
-                                <th>Price</th>
-                                <th>TOTAL</th>
+                                <th><center>Price</center> </th>
+                                <th><center>TOTAL</center></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -36,8 +37,8 @@
                                             <a href="/cart/add/<%=i%>"><span class="qty-plus"><i class="fa fa-plus" aria-hidden="true"></i></span></a>   
                                         </div>
                                     </td>
-                                    <td class="price"><span>RS <%=item.product.price%></span></td>
-                                    <td class="total_price"><span>RS <%= item.product.price*item.quantity%></span></td>
+                                    <td class="price"><span>RS_<%=item.product.price%></span></td>
+                                    <td class="total_price"><span>RS_<%= item.product.price*item.quantity%></span></td>
                                     <td class="action"><a href="/cart/remove/<%=i%>"><i class="icon_close"></i></a></td>
                                 </tr>
                             <% }); %> 

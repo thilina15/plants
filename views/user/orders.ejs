@@ -1,3 +1,4 @@
+
 <div class="container">
     <h2>All Orders</h2>
     <table class="table">
@@ -8,6 +9,7 @@
             <th scope="col">State</th>
             <th scope="col">Total</th>
             <th scope="col">Create Date</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -18,7 +20,7 @@
                         <% order.items.forEach(item=>{ %>
                             <div class="row">
                                 <img src="<%=item.product.imagPaths[0]%>" style="height: 40px; width: auto;">
-                                <%=item.size%>
+                                <%=item.size%> X
                                 <%=item.quantity%>  
                             </div>
                         <% }) %>  
@@ -31,6 +33,9 @@
                     </td>
                     <td style="vertical-align: middle;">
                         <%=order.createdDate.getDate() %>/<%=order.createdDate.getMonth() %>/<%=order.createdDate.getFullYear() %>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <a href="/order/user/<%=order._id %>">Show</a>
                     </td>
                 </tr>
             <%})%>

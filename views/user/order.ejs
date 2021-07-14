@@ -1,0 +1,150 @@
+
+    <br>
+    <div class="container">
+        <!-- order progress -->
+        <div class="container">
+
+        
+            <div class="row">
+                <div class="col-md-3" style="text-align: right;">
+                    <h5>Pending</h5> 
+                </div>
+                <div class="col-md-3" style="text-align: right;">
+                    <h5>Processing</h5> 
+                </div>
+                <div class="col-md-3" style="text-align: right;">
+                    <h5>Delivering</h5> 
+                </div>
+                <div class="col-md-3" style="text-align: right;">
+                <h5>Completed</h5>  
+                </div>
+            </div>
+            
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=progress%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=progress%>%"></div>
+            </div>
+        </div>
+        <center><h4><%=statement %> </h4> </center>
+<br><hr><hr>
+        <!-- order details -->
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <div class="cart-table clearfix">
+                    <table style="table-layout: auto; width: 100%;" class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Products</th>
+                                <th style="text-align: left;">Size</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>TOTAL</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% order.items.forEach((item,i) => { %>
+                                <tr>
+                                    <td class="cart_product_img">
+                                        <a href="#"><img src="<%=item.product.imagPaths[0]%>" alt="Product"></a>
+                                        <h5><%= item.product.name %></h5>
+                                    </td>
+                                    <td>
+                                        <h5 style="text-align: left;"><%= item.size%></h5>
+                                    </td>
+                                    <td>
+                                        <h5><%= item.product.category %></h5>
+                                    </td>
+                                    <td class="qty">
+                                        <h5 class="qty-text"><%= item.quantity %> </h5>
+                                    </td>
+                                    <td><%=item.product.price%>X<%= item.quantity %>=<%= item.product.price*item.quantity%>.00/=</td>
+                                </tr>
+                            <% }); %> 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="row">
+            <% if(order.items.length>0){%>
+                <form action=""></form>
+            <!-- delivery details -->
+            <div class="col-12 col-lg-6">
+                <h4>Delivery Details</h4>
+                <br>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="name" value="<%=order.address.name%>" readonly>
+                        </div>
+                        <div class="form-grou col-md-6">
+                            <label>Mobile</label>
+                            <input type="text" class="form-control" name="mobile" value="<%=order.address.mobile%>" readonly>
+                        </div>   
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Address Line 1</label>
+                        <input type="text" class="form-control" name="address1st" value="<%=order.address.address1st%>" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Address Line 2</label>
+                        <input type="text" class="form-control" name="address2nd" value="<%=order.address.address2nd%>" readonly>
+                    </div>
+                    <% if(progress=='25'||progress=='50') {%> 
+                        <form action="/order/admin/<%=order._id%>" method="POST">
+                            <select class="form-select" aria-label="Default select example" name="state">
+                                <option value="canceled" <% if(order.state=='canceled'){ %>selected<% } %>>cancel</option>
+                            </select>
+                            once your order moves to delivering stage, you can not cancel the order.
+                            <br>
+                            <button type="submit" class="btn btn-warning">Cancel Order</button>
+                            
+                        </form>
+                    <% } %> 
+            </div>
+            
+            <%} %> 
+            
+
+            <!-- Cart Totals -->
+            <div class="col-12 col-lg-6">
+                <br><br><br><br><br>
+                <center>
+                    <h2>Order Total</h2>
+                    <h1>Rs: <%=order.total%>.00/= </h1>
+                </center>
+                <% if(order.state=='completed'){ %>
+                    <form action="/order/feedback/<%=order._id%>" method="POST">
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Feedback</label>
+                            <textarea class="form-control" name="feedBack" required id="exampleFormControlTextarea1" rows="3" <% if(order.feedBackDone){%> readonly <% } %> ><%=order.feedBack%></textarea>
+                        </div>
+                        <!-- rating -->
+                        <div class="rate">
+                            <input type="radio" id="star5" <% if(order.feadBackDone){ %> readonly<% } %> name="rate" value="5" <% if(order.rating==5){ %> checked<% } %>/>
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" id="star4" <% if(order.feadBackDone){ %> readonly<% } %> name="rate" value="4" <% if(order.rating==4){ %> checked<% } %>/>
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" id="star3" <% if(order.feadBackDone){ %> readonly<% } %> name="rate" value="3" <% if(order.rating==3){ %> checked<% } %>/>
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" id="star2" <% if(order.feadBackDone){ %> readonly<% } %> name="rate" value="2" <% if(order.rating==2){ %> checked<% } %>/>
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" id="star1" <% if(order.feadBackDone){ %> readonly<% } %> name="rate" value="1" <% if(order.rating==1){ %> checked<% } %>/>
+                            <label for="star1" title="text">1 star</label>
+                        </div>
+                        <!-- end rating -->
+                        <% if(!order.feedBackDone){ %>
+                            <button type="submit" class="btn btn-success">Submit Review</button>
+                        <% } %> 
+                    </form>
+                    <% } %>  
+            </div>
+        </div>
+    </div>
+    <br>
+
+

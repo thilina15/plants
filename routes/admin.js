@@ -132,7 +132,7 @@ router.get('/logout',(req,res)=>{
 //direct login
 router.post('/login',(req,res)=>{
     if(req.body.userName == 'admin' && req.body.password == '123'){
-        req.session.admin="plantasyAdmin"
+        req.session.userType="plantasyAdmin"
         res.redirect('/admin/dashboard')
     }
     else{

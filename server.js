@@ -45,6 +45,16 @@ const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', ()=> console.log('connected to mongoose')) 
 
+//setup local user
+app.use((req,res,next)=>{
+    res.locals.userType = req.session.userType
+    if(req.session.user!=null){
+        const userOB = req.session.user
+        res.locals.user=userOB
+    }
+    next()
+})
+
 app.use('/',homePage);
 app.use('/admin',adminPage)
 app.use('/user',user)

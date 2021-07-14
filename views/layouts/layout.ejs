@@ -17,6 +17,7 @@
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/rating.css">
 
     <!-- file pond scripts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -32,7 +33,7 @@
 </head>
 
 <body>
-    <% if (locals.admin) { %>
+    <% if (locals.userType=='plantasyAdmin') { %>
         <%- include('../admin/_headder') %>
     <% }else{  %> 
         <%- include('../index/_headder') %> 

@@ -50,21 +50,24 @@ router.post('/login',async(req,res)=>{
     try{
         const userOB = await user.findOne({email:req.body.email, password:req.body.password})
         if(userOB){
+            req.session.userType='user'
             req.session.user=userOB
             res.redirect('/user/dashboard')
         }else{
             res.redirect('/')
         }
-    }catch{
+    }catch{ 
         res.redirect('/')
     }
 })
 
+//log out user
 router.get('/logout',(req,res)=>{
     req.session.destroy()
     res.redirect('/')
 })
 
+//show dashboard user
 router.get('/dashboard',userAuth,(req,res)=>{
     res.render('user/dashboard')
 })

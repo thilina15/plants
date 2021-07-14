@@ -3,44 +3,7 @@
 <!-- ##### Header Area Start ##### -->
 <header class="header-area">
 
-    <!-- ***** Top Header Area ***** -->
-    <div class="top-header-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="top-header-content d-flex align-items-center justify-content-between">
-                        <!-- Top Header Content -->
-                        <div class="top-header-meta">
-                        </div>
 
-                        <!-- Top Header Content -->
-                        <div class="top-header-meta d-flex">
-                            <% if(locals.user){ %>
-                                <!-- Login -->
-                                <div class="login">
-                                    <a href="/user/dashboard"><i class="fa fa-user" aria-hidden="true"></i> <span><%= user.firstName %></span></a>
-                                </div>
-                                <!-- Cart -->
-                            <div class="cart">
-                                <a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span>Cart <span class="cart-quantity">()</span></span></a>
-                            </div>
-                            <%}else{%>
-                                <!-- Login -->
-                                <div class="login">
-                                    <a href="/user/login"><i class="fa fa-user" aria-hidden="true"></i> <span>Login</span></a>
-                                </div>
-                                <!-- sign up -->
-                                <div class="login">
-                                    <a href="/user/signup"><i class="fa fa-user" aria-hidden="true"></i> <span>SignUp</span></a>
-                                </div>
-                            <%}%> 
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- ***** Navbar Area ***** -->
     <div class="alazea-main-menu">
@@ -69,9 +32,16 @@
                         <div class="classynav">
                             <ul>
                                 <li><a href="/">Home</a></li>
-                                <li><a href="about.html">About</a></li>
                                 <li><a href="/gallery">Shop</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <% if(locals.user){ %>
+                                    <li><a href="/user/dashboard"><%=locals.user.firstName%></a></li>
+                                    <li><a href="/order/user">Orders</a></li>
+                                    <li><a href="/cart">Cart</a></li>
+                                    <li><a href="/user/logout">LogOut</a></li>
+                                <% }else{ %>
+                                    <li><a href="/user/login">Login</a></li>
+                                    <li><a href="/user/signup">SignUp</a></li>
+                                <% } %>   
                             </ul>
                         </div>
                         <!-- Navbar End -->

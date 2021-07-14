@@ -38,7 +38,15 @@ const order = new mongoose.Schema({
         default:Date.now()
     },
     deliveredDate:Date,
-    feedBack:String
+    feedBack:String,
+    rating:{
+        type:Number,
+        default:0
+    },
+    feedBackDone:{
+        type:Boolean,
+        default:false
+    }
 })
 
 module.exports = mongoose.model('order',order)
