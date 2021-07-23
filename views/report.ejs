@@ -1,0 +1,167 @@
+<br>
+<div class="container">
+    <% var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %> 
+    <% var total=0 %> 
+    <% function calculateStateTotal(orderArray){%>
+        <% var subTotal = 0 %>  
+        <% orderArray.forEach(order=>{%>
+            <% subTotal+=order.total %> 
+        <%}) %> 
+        <% return subTotal %> 
+    <%} %> 
+    <form action="/report" method="POST">
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="exampleFormControlSelect1"> <h5>Year</h5></label>
+                <select class="form-control" name="year">
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="exampleFormControlSelect1"><h5>Month</h5></label>
+                <select class="form-control" name="month">
+                  <option value="0" <%if(month==0){%> selected <%}%> >1</option>
+                  <option value="1" <%if(month==1){%> selected <%}%>>2</option>
+                  <option value="2" <%if(month==2){%> selected <%}%>>3</option>
+                  <option value="3" <%if(month==3){%> selected <%}%>>4</option>
+                  <option value="4" <%if(month==4){%> selected <%}%>>5</option>
+                  <option value="5" <%if(month==5){%> selected <%}%>>6</option>
+                  <option value="6" <%if(month==6){%> selected <%}%>>7</option>
+                  <option value="7" <%if(month==7){%> selected <%}%>>8</option>
+                  <option value="8" <%if(month==8){%> selected <%}%>>9</option>
+                  <option value="9" <%if(month==9){%> selected <%}%>>10</option>
+                  <option value="10" <%if(month==10){%> selected <%}%>>11</option>
+                  <option value="11" <%if(month==11){%> selected <%}%>>12</option>
+                </select>
+            </div>
+            <div class="col-md-3 form-group" ><br><br>
+                <button type="submit" class="btn btn-info">Check Sales</button>
+            </div>
+        </div>
+    </form>
+          
+    <hr>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="myChart" width="100" height="100"></canvas>
+        </div>
+        <div class="col-md-6" >
+            <table style="height: 700px;">
+                <tbody>
+                    <tr>
+                        <td class="align-middle">
+                            
+                            <!-- all report contents -->
+                            <h4 style="text-align: center;">Sales Report of <%=months[month]%></h4>
+                            <br><hr>
+
+                            <table class="table">
+                                <tr>
+                                    <th style="text-align: left;">Order Status</th>
+                                    <td>pending</td>
+                                    <td>processing</td>
+                                    <td>delivering</td>
+                                    <td>completed</td>
+                                    <td>canceled</td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left;">Number of Orders</th>
+                                    <td><%=orders.pending.length %> </td>
+                                    <td><%=orders.processing.length %> </td>
+                                    <td><%=orders.delivering.length %> </td>
+                                    <td style="color: rgb(39, 190, 29);"><%=orders.completed.length %> </td>
+                                    <td style="color: red;"><%=orders.canceled.length %> </td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left;">Order Total (Rs)</th>
+                                    <td><%=calculateStateTotal(orders.pending)  %> </td>
+                                    <td><%=calculateStateTotal(orders.processing) %> </td>
+                                    <td><%=calculateStateTotal(orders.delivering) %> </td>
+                                    <td style="color: rgb(39, 190, 29);"><%=calculateStateTotal(orders.completed) %> </td>
+                                    <td style="color: red;"><%=calculateStateTotal(orders.canceled) %> </td>
+                                </tr>
+                            </table><br><br>
+                            <center>
+                                <% total+=calculateStateTotal(orders.pending)+calculateStateTotal(orders.processing)+calculateStateTotal(orders.delivering)+calculateStateTotal(orders.completed) %> 
+                                <h5>Total Earnings of <%=months[month]%>  :- Rs <%=total %>.00/= </h5> 
+                            </center>
+
+                            <!-- end of report contents -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            datasets: [
+                {
+                    label: 'pending orders',
+                    data: <%- JSON.stringify(orders.pending); %>,
+                    backgroundColor:['rgba(190, 188, 24, 1)'],
+                    parsing:{
+                        yAxisKey: 'total'
+                    },
+                },
+                {
+                    label: 'processing orders',
+                    data: <%- JSON.stringify(orders.processing); %>,
+                    backgroundColor:['rgba(190, 112, 24, 1)'],
+                    parsing:{
+                        yAxisKey: 'total'
+                    },
+                },
+                {
+                    label: 'delivering orders',
+                    data: <%- JSON.stringify(orders.delivering); %>,
+                    backgroundColor:['rgba(24, 190, 178, 1)'],
+                    parsing:{
+                        yAxisKey: 'total'
+                    },
+                },
+                {
+                    label: 'completed orders',
+                    data: <%- JSON.stringify(orders.completed); %>,
+                    backgroundColor:['rgba(39, 190, 24, 1)'],
+                    parsing:{
+                        yAxisKey: 'total'
+                    },
+                },
+                {
+                    label: 'canceld orders',
+                    data: <%- JSON.stringify(orders.canceled); %>,
+                    backgroundColor:['rgba(190, 24, 26, 1)'],
+                    parsing:{
+                        yAxisKey: 'total'
+                    },
+                }
+            ]
+        },
+        options: {
+            responsive:true,
+            parsing:{
+                xAxisKey: 'createdDate'
+            }
+        }
+    });
+    </script>
+
+

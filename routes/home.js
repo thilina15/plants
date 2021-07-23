@@ -1,4 +1,5 @@
 const express = require('express')
+const order = require('../models/order')
 const router = express.Router()
 const product = require('../models/product')
 
@@ -20,8 +21,8 @@ router.get('/', userAuth,(req,res)=>{
 })
 
 router.get('/gallery',userAuth,async(req,res)=>{
-    var items = await product.find({})
-    res.render('index/gallery',{products:items})
+    var items = await product.find({active:true})
+    res.render('index/gallery',{products:items,searchKey:'', category:'all'})
 })
 
 router.get('/gallery/:id',userAuth,async(req,res)=>{
@@ -32,6 +33,35 @@ router.get('/gallery/:id',userAuth,async(req,res)=>{
         res.redirect('/')
     }
     
+})
+
+router.get('/feedbacks',async(req,res)=>{
+    var ob = await order.find({feedBackDone:true}).populate('user')
+    console.log(ob)
+    res.render('feedbacks',{orders:ob})
+})
+
+router.post('/search',async(req,res)=>{
+    var category=req.body.category
+    if(req.body.category=='all'){
+        category = new RegExp('p','i')
+    }
+    var productName=''
+    if(req.body.keyword!=null && req.body.keyword!==''){
+        productName= new RegExp(req.body.keyword, 'i')
+        var items = await product.find({name:productName, active:true,category:category})
+        res.render('index/gallery',{products:items, searchKey:req.body.keyword , category:req.body.category})
+    }else{
+        var items = await product.find({active:true,category:category})
+        res.render('index/gallery',{products:items,searchKey:'', category:req.body.category})
+    }
+
+})
+
+//pramotions 
+router.get('/promotions',async(req,res)=>{
+    var ob = await product.find({active:true,promotion:'on'})
+    res.render('index/promotions',{products:ob})
 })
 
 module.exports =router;

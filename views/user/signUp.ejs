@@ -1,32 +1,35 @@
-<%- include('../_error') %> 
-<form action="/user/signup" method="POST">
-    <div>
-        <label>First Name</label>
-        <input type="text" name="firstName" required>
-    </div>
-    <div>
-        <label>Last Name</label>
-        <input type="text" name="lastName" required>
-    </div>
-    <div>
-        <label>Address 1st Line</label>
-        <input type="text" name="address1st" required>
-    </div>
-    <div>
-        <label>address 2nd Line</label>
-        <input type="text" name="address2nd" required>
-    </div>
-    <div>
-        <label>Email</label>
-        <input type="email" name="email" required>
-    </div>
-    <div>
-        <label>Mobile</label>
-        <input type="tel" name="mobile" required>
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="password" name="password" required>
-    </div>
-    <button type="submit">sign up</button>
-</form>
+<br>
+<center><h4>Register New Customer</h4></center>
+<div class="container">
+    <form action="/user/signup" method="POST">
+        <div>
+            <label>First Name</label>
+            <input type="text" name="firstName" class="form-control" required>
+        </div>
+        <div>
+            <label>Last Name</label>
+            <input type="text" name="lastName" class="form-control" required>
+        </div>
+        <div>
+            <label>Address 1st Line</label>
+            <input type="text" name="address1st" class="form-control" required>
+        </div>
+        <div>
+            <label>address 2nd Line</label>
+            <input type="text" name="address2nd" class="form-control" required>
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" required>
+        </div>
+        <div>
+            <label>Mobile</label>
+            <input type="tel" name="mobile" class="form-control" required>
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password" name="password" class="form-control" required>
+        </div><br>
+        <button type="submit" class="btn btn-success">sign up</button>
+    </form>
+</div>

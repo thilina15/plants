@@ -13,6 +13,14 @@ const product = new mongoose.Schema({
         type: Number,
         required: true
     },
+    promotion:{
+        type:String,
+        default:'off'
+    },
+    oldPrice:{
+        type: Number,
+        default:0
+    },
     size: {
         small:{
             type:String,
@@ -26,6 +34,10 @@ const product = new mongoose.Schema({
             type:String,
             default:'off'
         }
+    },
+    active:{
+        type:String,
+        default:true
     },
     category:{
         type:String,
@@ -48,3 +60,4 @@ product.virtual('imagPaths').get(function(){
 })
 
 module.exports = mongoose.model('product',product)
+

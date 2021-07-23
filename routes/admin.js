@@ -54,13 +54,21 @@ router.get('/',(req,res)=>{
 })
 
 //login page
-router.get('/login',(req,res)=>{
-    res.render('admin/login')
+router.get('/login',async(req,res)=>{
+    var ob = await admin.findOne()
+    if(ob){
+        res.render('admin/login',{admin:true})
+        console.log('admin have')
+    }else{
+        console.log('admin not have')
+        res.render('admin/login',{admin:false})
+    }
+    
 })
 
 //gallery
 router.get('/gallery',adminAuth,async(req,res)=>{
-    var pros = await product.find()
+    var pros = await product.find({active:true})
     res.render('admin/gallery',{products:pros})
 })
 
@@ -76,6 +84,8 @@ router.post('/product/:id',async(req,res)=>{
     productOB.description = req.body.description
     productOB.price = req.body.price
     productOB.size = {small:req.body.small, medium: req.body.medium, large: req.body.large}
+    productOB.promotion=req.body.promotion
+    productOB.oldPrice = req.body.oldPrice
     productOB.category = req.body.category
     updateImage(productOB,req.body.image1,0)
     updateImage(productOB,req.body.image2,1)
@@ -104,45 +114,73 @@ router.post('/new',adminAuth,async(req,res)=>{
     res.redirect('/admin/gallery')
 })
 
-router.get('/dashboard',adminAuth,(req,res)=>{
-    res.render('admin/account')
+//admin account
+router.get('/dashboard',adminAuth,async(req,res)=>{
+    var ob = await admin.findOne()
+    res.render('admin/account',{admin:ob})
 })
 
+//admin logout
 router.get('/logout',(req,res)=>{
     req.session.destroy()
     res.redirect('/admin/login')
 })
 
-// router.post('/login',async(req,res)=>{
-//     try{
-//         const adminOB = await admin.findOne({userName:req.body.userName, password:req.body.password})
-//         if(adminOB){
-//             req.session.admin="plantasyAdmin"
-//             res.redirect('/admin/dashboard')
-//         }else{
-//             res.locals.error='invalid login details'
-//             res.render('admin/login')
-//         }
-//     }
-//     catch(err){
-//         res.locals.error='invalid login details'
-//         res.render('admin/login')
-//     }  
-// })
-//direct login
-router.post('/login',(req,res)=>{
-    if(req.body.userName == 'admin' && req.body.password == '123'){
-        req.session.userType="plantasyAdmin"
-        res.redirect('/admin/dashboard')
+//admin register
+router.post('/register',async(req,res)=>{
+    var ob = new admin({
+        userName:req.body.userName,
+        password:req.body.password
+    })
+    try{
+        await ob.save()
+        var message='new admin created'
+        res.redirect('/admin/login/?success='+message)
+    }catch(e){
+        var message='can not create admin. try again'
+        res.redirect('/admin/login/?error='+message)
     }
-    else{
-        res.locals.error='invalid login details'
-        res.render('admin/login')
-    } 
 })
 
+//admin login logic
+router.post('/login',async(req,res)=>{
+    try{
+        const adminOB = await admin.findOne({userName:req.body.userName, password:req.body.password})
+        if(adminOB){
+            req.session.userType="plantasyAdmin"
+            res.redirect('/order/all')
+        }else{
+            var messsage='invalid login details'
+            res.redirect('/admin/login/?error='+messsage)
+        }
+    }
+    catch(err){
+        res.locals.error='invalid login details'
+        res.render('admin/login')
+    }  
+})
+
+//update admin account details
+router.post('/',async(req,res)=>{
+    var ob = await admin.findOne()
+    if(ob.password==req.body.oldPassword & req.body.newPassword==req.body.confirmPassword)
+    {
+        ob.userName = req.body.userName,
+        ob.password=req.body.newPassword
+        await ob.save()
+        var message = 'admin details updated..'
+        res.redirect('/admin/dashboard/?success='+message)
+    }else{
+        var message = 'admin details updated..'
+        res.redirect('/admin/dashboard/?error='+message)
+    }
+})
+
+//remove product
 router.get('/removeproduct/:id',async(req,res)=>{
-    await product.findByIdAndRemove(req.params.id)
+    var ob = await product.findById(req.params.id)
+    ob.active=false
+    await ob.save()
     res.redirect('/admin/gallery')
 })
 

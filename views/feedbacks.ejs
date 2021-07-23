@@ -1,0 +1,34 @@
+<br>
+<div class="container">
+    <center><h3>Customer Reviews</h3></center>
+    <div class="row">
+        <% orders.forEach((order,index)=>{%>
+            <br><br>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"><h4><%=index+1%>). <i><%=order.user.firstName %> <%=order.user.lastName %></i>  </h4></label>
+                    <textarea class="form-control" name="feedBack" required id="exampleFormControlTextarea1" rows="3" readonly ><%=order.feedBack%></textarea>
+                </div>
+                <!-- rating -->
+                <div class="rate">
+                    <input type="radio" id="star5"  readonly  value="5" <% if(order.rating==5){ %> checked<% } %>/>
+                    <label for="star5" title="text">5 stars</label>
+                    <input type="radio" id="star4"  readonly  value="4" <% if(order.rating==4){ %> checked<% } %>/>
+                    <label for="star4" title="text">4 stars</label>
+                    <input type="radio" id="star3"  readonly  value="3" <% if(order.rating==3){ %> checked<% } %>/>
+                    <label for="star3" title="text">3 stars</label>
+                    <input type="radio" id="star2"  readonly  value="2" <% if(order.rating==2){ %> checked<% } %>/>
+                    <label for="star2" title="text">2 stars</label>
+                    <input type="radio" id="star1"  readonly  value="1" <% if(order.rating==1){ %> checked<% } %>/>
+                    <label for="star1" title="text">1 star</label>
+                </div>
+            </div>
+            <br><hr>
+        <%}) %> 
+    </div>
+</div>
+
+
+
+
+

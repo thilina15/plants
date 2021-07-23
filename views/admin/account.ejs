@@ -1,2 +1,19 @@
-this is admin account dashboard
-<a href="/order/all">orders</a>
+<div class="container">
+    <center><h5>Admin Login Update</h5></center>
+    <form action="/admin" method="POST">
+    
+    <label for="">User Name</label>
+    <input type="text" name="userName" value="<%=admin.userName%>" class="form-control">
+
+    <label for="">Old Password</label>
+    <input type="password" name="oldPassword" class="form-control">
+    
+    <label for="">New Password</label>
+    <input type="password" name="newPassword" class="form-control">
+    
+    <label for="">Confirm Password</label>
+    <input type="password" name="confirmPassword" class="form-control">
+
+    <button type="submit" class="btn btn-info">Update</button>
+    </form>
+</div>

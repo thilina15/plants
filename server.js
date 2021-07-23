@@ -18,6 +18,7 @@ const adminPage = require('./routes/admin')
 const user = require('./routes/user')
 const cart = require('./routes/cart')
 const order = require('./routes/order')
+const report = require('./routes/report')
 
 
 //app config
@@ -45,8 +46,17 @@ const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', ()=> console.log('connected to mongoose')) 
 
+
 //setup local user
 app.use((req,res,next)=>{
+
+    if(req.query.error){
+        res.locals.error=req.query.error
+    }
+    if(req.query.success){
+        res.locals.success=req.query.success
+    }
+
     res.locals.userType = req.session.userType
     if(req.session.user!=null){
         const userOB = req.session.user
@@ -60,5 +70,6 @@ app.use('/admin',adminPage)
 app.use('/user',user)
 app.use('/cart',cart)
 app.use('/order',order)
+app.use('/report',report)
 
 app.listen(process.env.PORT||3000); 

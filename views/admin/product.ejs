@@ -21,7 +21,7 @@
                         <div class="col-md-3">
                             <label>SIZE</label>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             small:
                             <input type="checkbox" name="small" <% if(product.size.small=='on') {%>checked <%}%>>
                             medium:
@@ -41,9 +41,25 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <label>DESCRIPTION</label>
                 <textarea name="description" cols="30" rows="10" required class="form-control"><%= product.description %></textarea>
+            </div>
+            <div class="col-md-3">
+                <center>PROMOTION</center>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-8">
+                            Promotion:
+                            <input type="checkbox" name="promotion" <% if(product.promotion=='on') {%>checked <%}%>>
+                        </div>
+                    </div>   
+                </div>
+                <div class="form-group">
+                    <label>OLD PRICE</label>
+                    <input type="number" name="oldPrice" class="form-control" value="<%= product.oldPrice %>">
+                    <p>Always keep this higher than your regular price</p>
+                </div>
             </div>
         </div>
         

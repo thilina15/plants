@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production'){
+    require('dotenv').config({path:'../.env'})   
+}
+
 const express = require('express')
 const router = express.Router()
 const user = require('../models/user')
@@ -7,11 +11,11 @@ const {adminAuth} = require('../auth/adminAuth')
 const order = require('../models/order')
 const { findById } = require('../models/user')
 const { route } = require('./home')
+const {transpoter} = require('../auth/email')
 
 
 //place order
 router.post('/',userAuth,async(req,res)=>{
-    console.log(req.body.name) 
     const name = req.body.name
     const ad1 = req.body.address1st
     const ad2 = req.body.address2nd
@@ -36,7 +40,24 @@ router.post('/',userAuth,async(req,res)=>{
     await orderOB.save()
     cartOB.items=[]
     await cartOB.save()
-    res.redirect('/order/user')
+
+    // configure mail options
+    var mailOptions = {
+        from: process.env.EMAIL,
+        to: userOB.email,
+        subject: 'Your order has been placed',
+        text:'hello '+userOB.firstName+', \n \n Thank you for your order. We will deliver it soon.\nYou can track the progress of your order by navigating orders pannel.. \n \nPlantasy Team.'
+    }
+    transpoter.sendMail(mailOptions,(err,info)=>{
+        if(err){
+            var message = 'your order is placed but there is a problem with sending Email..'
+            res.redirect('/order/user/?success='+message)
+            return
+        }else{
+            var message = 'order placed'
+            res.redirect('/order/user/?success='+message)
+        }
+    })
 })
 
 //view all orders (user)
@@ -72,7 +93,12 @@ router.post('/admin/:orderID',async(req,res)=>{
         orderOB.deliveredDate = Date.now()
     }
     await orderOB.save()
-    res.redirect('/order/'+req.body.state)
+    if(res.locals.userType=='plantasyAdmin'){
+        res.redirect('/order/'+req.body.state)
+    }else{
+        res.redirect('/order/user')
+    }
+    
 })
 
 //view one order for user

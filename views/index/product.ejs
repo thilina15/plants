@@ -40,6 +40,8 @@
                     <div class="col-12 col-md-6">
                         <div class="single_product_desc">
                             <h4 class="title"><%= product.name %></h4>
+                            <h4><del> <% if(product.promotion=='on'){%>  Rs: <%=product.oldPrice%>.00/=    <%}%> </del> </h4>
+                            <h4><% if(product.promotion=='on'){%>  <%=((product.oldPrice-product.price)/product.oldPrice)*100%>%  OFF  <%}%></h4>
                             <h4 class="price">Rs: <%= product.price %>.00/=</h4>
                             <div class="short_overview">
                                 <p><%= product.description %></p>

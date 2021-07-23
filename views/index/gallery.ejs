@@ -7,6 +7,38 @@
 <section class="shop-page section-padding-0-100">
     <div class="container">
         
+       <center><br>
+        <form action="/search" method="POST">
+            <div class="row">
+            
+                <div class="col-md-6">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="keyword" value="<%=searchKey%>">
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select" aria-label="Default select example" name="category">
+                        <option  value="all"  <% if(category=='all'){%> selected <%}%>  >All Category</option>
+                        <option value="pot" <% if(category=='pot'){%> selected <%}%>>pot</option>
+                        <option value="plant" <% if(category=='plant'){%> selected <%}%>>Plant</option>
+                      </select>
+                </div>
+                
+                <div class="col-md-2">
+                    <button class="btn btn-outline-success" type="submit">Search Products</button>
+                </div>
+                <div class="col-md-2">
+                    <a href="/promotions"><h3 style="color: green;"><b><i>Promotions</i></b> </h3> </a>
+                </div>
+                
+            </div> 
+            
+        </form>
+        
+        
+       </center>
+            
+            
+
+        
 
         <div class="row">
             <br><hr>
@@ -23,23 +55,18 @@
                                 <div class="single-product-area mb-50">
                                     <!-- Product Image -->
                                     <div class="product-img">
-                                        <a href="/gallery/<%= product.id %>"><img src="<%= product.imagPaths[0] %>" alt=""></a>
+                                        <img src="<%= product.imagPaths[0] %>" alt="">
                                         <!-- Product Tag -->
                                         <div class="product-tag">
-                                            <a href="#"><%=product.category%></a>
-                                        </div>
-                                        <div class="product-meta d-flex">
-                                            <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                            <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
-                                            <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+                                            <a href="#"><%=product.category%>  <% if(product.promotion=='on'){%> <p style="color: green;">PROMOTION </p> <%}%> </a>
                                         </div>
                                     </div>
                                     <!-- Product Info -->
                                     <div class="product-info mt-15 text-center">
                                         <a href="/gallery/<%= product.id %>">
-                                            <p><%=product.name%></p>
+                                            <h4><%=product.name%></h4>
                                         </a>
-                                        <h6><%=product.price%></h6>
+                                        <h6> <del> <% if(product.promotion=='on'){%>  Rs: <%=product.oldPrice%>.00/=    <%}%> </del>      Rs: <%=product.price%>.00/=</h6>
                                     </div>
                                 </div>
                             </div>

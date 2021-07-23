@@ -25,7 +25,7 @@ const order = new mongoose.Schema({
     },
     state:{
         type:String,
-        default:'processing'
+        default:'pending'
     },
     address:{
         name:String,
